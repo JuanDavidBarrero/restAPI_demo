@@ -23,6 +23,14 @@ const usuariosPost = async (req = request, res = response) => {
 
     const usuario = new Usuario( {nombre, correo, password, rol} );
 
+    const emialExist = await Usuario.findOne({correo});
+
+    if(emialExist){
+        return res.status(400).json({
+            msg: "Ese correo ya esta registrado"
+        });
+    }
+
 
     const salt = bcryptjs.genSaltSync();
     usuario.password = bcryptjs.hashSync(password,salt);
@@ -30,7 +38,6 @@ const usuariosPost = async (req = request, res = response) => {
     await usuario.save();
 
     res.json({
-        msg: "Hola a controlador",
         usuario
     });
 }
