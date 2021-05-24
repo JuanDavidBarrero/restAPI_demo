@@ -4,22 +4,36 @@ const Usuario = require('../models/usuario');
 
 
 const esRolValido = async (rol = '') => {
-    const existRol = await Role.findOne({rol});
-    if(!existRol){
+    const existRol = await Role.findOne({ rol });
+    if (!existRol) {
         throw new Error('el rol no existe');
     }
 }
 
 
 const exiteEmail = async (correo = '') => {
-    const exits = await Usuario.findOne({correo})
-    if (exits){
+    const exits = await Usuario.findOne({ correo })
+    
+    if (exits) {
         throw new Error('Ese correo ya esta en la base datos')
     }
 }
 
 
+
+const existeUsuarioByID = async (id) => {
+
+    const existeUsuario = await Usuario.findById(id);
+
+    if (!existeUsuario) {
+        throw new Error(`El id ${id} no existe`);
+    }
+
+}
+
+
 module.exports = {
     esRolValido,
-    exiteEmail
+    exiteEmail,
+    existeUsuarioByID
 }
