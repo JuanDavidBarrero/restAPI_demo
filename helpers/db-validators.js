@@ -11,7 +11,6 @@ const esRolValido = async (rol = '') => {
     }
 }
 
-
 const exiteEmail = async (correo = '') => {
     const exits = await Usuario.findOne({ correo })
 
@@ -19,8 +18,6 @@ const exiteEmail = async (correo = '') => {
         throw new Error('Ese correo ya esta en la base datos')
     }
 }
-
-
 
 const existeUsuarioByID = async (id) => {
 
@@ -41,10 +38,25 @@ const existeCategoria = async (id) => {
     }
 }
 
+const coleccionesPermitidas = async (coleccion = '', colecciones = []) => {
+
+    const incluida = colecciones.includes(coleccion);
+
+    if (!incluida) {
+        throw new Error("La coleccion no existe");
+    }
+
+    return true; 
+
+}
+
+
+
 
 module.exports = {
     esRolValido,
     exiteEmail,
     existeUsuarioByID,
-    existeCategoria
+    existeCategoria,
+    coleccionesPermitidas
 }
